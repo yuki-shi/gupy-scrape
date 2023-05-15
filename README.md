@@ -1,5 +1,6 @@
 # gupyuki: i don't wanna be a NEET anymore
 simple CLI script for Gupy-related job-hunting.
+
 returns a table with the last 10 job listings for the inputted keyword.
 
 ## usage
