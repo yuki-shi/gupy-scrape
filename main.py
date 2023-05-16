@@ -1,10 +1,8 @@
 #!./env/bin/python
 
-import requests
-from bs4 import BeautifulSoup
 from tabulate import tabulate
-import pandas as pd
 import argparse
+from gupyuki import get_job_listing, format_to_dataframe
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
@@ -13,23 +11,11 @@ if __name__ == '__main__':
                         type=str,
                         required=True)
     args = parser.parse_args()
-
     keyword = args.keyword
-    response = ((requests.get(f'https://portal.gupy.io/job-search/term={keyword}')
-                         .text))
-    soup = BeautifulSoup(response, 'html.parser')
 
-    vagas = []
-    list_items = soup.find_all('li')
-
-    for item in list_items:
-        vagas.append([item.find('h4').text,
-                      item.find_all('p')[-1].text,
-                      item.find_all('a')[0]['href']])
-
-    df = pd.DataFrame(vagas,columns=['vaga', 'data', 'url'])
-    df['data'] = df['data'].str.replace(r'.*(?<= )', '', regex=True)
+    jobs = get_job_listing(keyword)
+    df = format_to_dataframe(jobs)
 
     print(tabulate(df,
-                  #headers=['vaga', 'data de publicação'],
+                 #headers=['vaga', 'data de publicação'],
                    tablefmt='grid'))
