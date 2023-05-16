@@ -19,17 +19,17 @@ if __name__ == '__main__':
                          .text))
     soup = BeautifulSoup(response, 'html.parser')
 
-    vagas = {}
+    vagas = []
     list_items = soup.find_all('li')
 
     for item in list_items:
-        vagas[item.find('h4').text] = item.find_all('p')[-1].text
+        vagas.append([item.find('h4').text,
+                      item.find_all('p')[-1].text,
+                      item.find_all('a')[0]['href']])
 
-    df = (pd.DataFrame([vagas]).transpose()
-                               .reset_index(names='vaga')
-                               .rename(columns={0: 'data'}))
+    df = pd.DataFrame(vagas,columns=['vaga', 'data', 'url'])
     df['data'] = df['data'].str.replace(r'.*(?<= )', '', regex=True)
 
     print(tabulate(df,
-                   headers=['vaga', 'data de publicação'],
-                   tablefmt='psql'))
+                  #headers=['vaga', 'data de publicação'],
+                   tablefmt='grid'))
