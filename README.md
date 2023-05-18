@@ -8,7 +8,7 @@ after cloning, create an env and install required dependecies by running:
 
 ```bash
 $ chmod a+rx init.sh
-$ ./init.sh
+$ source init.sh
 ```
 then search for jobs with:
 ```bash
