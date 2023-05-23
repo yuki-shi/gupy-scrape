@@ -24,6 +24,8 @@ def get_job_listings(keyword: str) -> list[str, str, str]:
     response = ((requests.get(f'https://portal.gupy.io/job-search/term={keyword}')
                          .text))
     soup = BeautifulSoup(response, 'html.parser')
+    if not soup.find('h4'):
+        sys.exit('No results found, try another keyword')
 
     vagas = []
     list_items = soup.find_all('li')
