@@ -1,7 +1,7 @@
-# gupyuki: i don't wanna be a NEET anymore
+# gupyuki ~ i don't wanna be a NEET anymore
 simple CLI script for Gupy-related job-hunting.
 
-returns a table with the latest job listings if there were any posted in the same day.
+returns a table with the latest job listings for a given keyword if there were any posted in the same day.
 
 ## usage
 after cloning, create an env and install required dependecies by running:
