@@ -45,11 +45,11 @@ def format_to_dataframe(job_list: list[str, str, str]) -> str:
     Returns:
         string: Job-listings that were published today.
     """
-    df = pd.DataFrame(job_list, columns=['vaga', 'data', 'url'])
-    df['data'] = df['data'].str.replace(r'.*(?<= )', '', regex=True)
+    df = pd.DataFrame(job_list, columns=['job', 'date', 'url'])
+    df['date'] = df['date'].str.replace(r'.*(?<= )', '', regex=True)
     today = dt.datetime.today().strftime('%d/%m/%Y')
 
-    if not df['data'].str.contains(today).any():
+    if not df['date'].str.contains(today).any():
         sys.exit('No new jobs today!')
 
-    return df.loc[df['data'] == today, :]
+    return df.loc[df['date'] == today, :]
